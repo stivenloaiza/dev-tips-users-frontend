@@ -54,8 +54,6 @@ import './App.css'
 // }
 
 function App() {
-
-
   const {register, watch, handleSubmit, formState:{errors}} = useForm()
 
   const onSubmit = async (data: any) => {
@@ -74,11 +72,6 @@ function App() {
         console.log(data)
         console.log(`The form was send`)
       }
-  
-      else {
-        console.error(`We had a issue sending the data`)
-      }
-
     } catch(error){
       throw new Error(`The form wasn't send cause ${error}`)
     }
@@ -88,7 +81,7 @@ function App() {
     <>
 
     <h1>Register</h1>
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form method="POST" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="">Name and Last Name: </label>
           <input type="text" id="name" className='user' 
           {...register("name", {
