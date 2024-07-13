@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+
+
+
+
+html, body {
+  font-family: 'Ubuntu', sans-serif;
+  height: 100%;
+  width: 100%;
+  background-color: #003664;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 0 0 0;
+}
+
+#root > div {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+/* USER FORM */
+
+.container_parent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #021b31;
+  align-items: center;
+  border-radius: 40px;
+  width: 60%;
+}
+
+.container_parent form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 20px;
+  width: 80%;
+  height: 60vh;
+  color: white;
+}
+
+.container_parent form label {
+
+  margin: 8px 10px 10px 0px;
+}
+
+.container_parent form button {
+
+  margin: 40px 0px;
+  width: 100%;
+  font-weight: 1000;
+  background-color: #28992e;
+  color: white;
+}
+
+.container_parent h1 {
+  color: white;
+}
+
+.container_parent form button:hover {
+
+  cursor: pointer;
+}
+
+.container_parent form input, form select {
+
+  width: 100%;
+  height: 30px;
+}
+
+.container_parent form span {
+  color: tomato;
+  font-size: 10px;
+  font-weight: 1000;
+  margin: 4px 0px;
+}
+
+.container_parent form .next {
+  margin: 20px 0;
+}
+
+.container_parent .apikeyButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px 0px 0px;
+  padding: 20px;
+}
+
+
+/* SUBCRIPTION FORM */
+
+.subContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: #021b31;
+}
+
+.subContainer h1 {
+  color: white;
+}
+
+.subContainer form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    color: white;
+    gap: 0.5rem;
+}
+
+.subContainer form input {
+  padding: 6px 0;
+}
+
+.subContainer .buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.subContainer button {
+  width: auto;
+  padding: 10px 40px;
+  border-radius: 20px;
+  margin: 5px;
+  background-color: #28992e;
+  color: white;
+  font-weight: 1000;
+  border: none;
+}
+
+
+/* SUMMARY STYLES*/
+
+
+
+
