@@ -2,13 +2,12 @@ import { SubFormProperties, SubscriptionForm} from "../common/subscription.field
 import { useForm } from "react-hook-form";
 import { FC, useEffect, useState } from "react";
 import '../styles/summary.css'
-import axios from 'axios'
 
 interface subformStep extends SubFormProperties<SubscriptionForm> {
-  subArray: Array<SubscriptionForm>
+  subscriptions: Array<SubscriptionForm>
 }
 
-const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubData, nextStep, prevStep, subArray}) => {
+const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubData, nextStep, prevStep, subscriptions}) => {
 
     const {register, handleSubmit, watch, formState:{errors}, setValue} = useForm()
     const [apikey, setApikey] = useState<string>('')
@@ -18,33 +17,6 @@ const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubDa
         setValue(key, subData[key])
       })
     }, [subData, setSubData])
-
-
-    //ENDPOINT DISPONIBLE PARA OTROS EQUIPOS
-    const onSubmit = async (data:any) => {
-      try {
-
-          const response = await axios.post('http://localhost:3000/users/register/form', {
-            Headers: {
-              "Content-Type":"application/json"
-            }
-          });
-      
-          if(response.status === 200){
-            
-            try {
-              SubFormStep({...FormData, ...data});
-              nextStep();
-            } catch(error){
-              console.error(`There is a issue in the data post ${error}`)
-            }
-            
-          }
-
-      } catch(error){
-        console.error(`There is a issue with the submit subscription action ${error}`)
-      }
-    }
 
     //FUNCIÓN OBTENER EL APIKEY 
     // const getApi = async() => {
@@ -67,12 +39,12 @@ const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubDa
     // }
 
     return (
-        <div className="summary">
+        <form method="POST" className="summary" onSubmit={handleSubmit(nextStep)} >
           <h2>RESUMEN DE SUBSCRIPCIONES</h2>
 
           <div className="container-summaries">
             {
-              subArray.map((subscription, index) => (
+              subscriptions.map((subscription, index) => (
                 <div className="container">
                   <p>Subscription {index + 1}</p>
                     <div className="containSummary" key={index}>
@@ -86,8 +58,8 @@ const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubDa
               ))
             }
           </div>
-            <button type="button" onClick={handleSubmit(onSubmit)}>Finalizar Registro</button>
-        </div>
+            <button type="submit">Finalizar Registro</button>
+        </form>
     )
 
 }

@@ -1,6 +1,6 @@
 export interface SubscriptionForm {
     userId: string;
-    communication: string;
+    type: string;
     levels: string;
     lang: string;
     technology: string;
@@ -36,5 +36,5 @@ export interface SubFormProperties<T extends SubscriptionForm> {
     validateArray: () => boolean;
     nextStep: () => void;
     prevStep?: () => void;
-    subArray: Array<T>
+    subscriptions: Array<T>
 }

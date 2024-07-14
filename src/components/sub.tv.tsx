@@ -29,24 +29,24 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, set
             <h1>TV Subscription</h1>
             <form method="POST" onSubmit={handleSubmit(onSubmit)}>
 
-                    <label htmlFor="">Communication</label>
-                    <input type="text" id="communication" readOnly className='user' defaultValue='tv' {...register("communication", {
-                        required: "communication is required",
+                    <label htmlFor="">Type: </label>
+                    <input type="text" id="type" readOnly className='user' defaultValue='tv' {...register("type", {
+                        required: "type is required",
                     })}/>
-                    {errors.communication && typeof errors.communication.message === 'string' && <span>{errors.communication.message}</span>}
+                    {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
             
-                    <label htmlFor="">Senority</label>
-                    <select id="" {...register("levels", {
+                    <label htmlFor="">Level: </label>
+                    <select id="levels" {...register("levels", {
                         required: "The seniority is required"
                         })}>
-                        <option value="junior">Junior Developer</option>
-                        <option value="mid_level">MID Level</option>
-                        <option value="senior">Senior Developer</option>
+                        <option value="junior">Junior level</option>
+                        <option value="mid">MID Level</option>
+                        <option value="senior">Senior level</option>
                     </select>
                     {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
                     
 
-                    <label htmlFor="">Language</label>
+                    <label htmlFor="">Language: </label>
                     <select id="lang" {...register("lang", {
                         required: "The language is required"
                     })}>
@@ -56,7 +56,7 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, set
                     {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
 
 
-                    <label htmlFor="">Programming Language</label>
+                    <label htmlFor="">Technology: </label>
                     <select id="technology" {...register("technology", {
                         required: "The programming language is required"
                     })}>
@@ -64,7 +64,7 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, set
                         <option value="javascript"> Javascript </option>
                         <option value="typescript">Typescript</option>
                         <option value="java">Java</option>
-                        <option value="C-Sharp">C-Sharp</option>
+                        <option value="c-sharp">C-Sharp</option>
                     </select>
                     {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
 

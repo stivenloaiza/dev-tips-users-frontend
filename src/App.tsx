@@ -27,7 +27,7 @@ const App:React.FC = () => {
 
       }); 
 
-      const [subArray, setSubArray] = useState<Array<SubscriptionForm>>([])
+      const [subscriptions, setSubscriptionsArray] = useState<Array<SubscriptionForm>>([])
       const [errorMessage, setErrorMessage] = useState<string | null>(null)
       const [responseMessage, setResponseMessage] = useState('')
 
@@ -36,14 +36,14 @@ const App:React.FC = () => {
       }, [step]);
 
       useEffect(() => {
-        console.log('updated sub array', subArray)
-      }), [subArray]
+        console.log('updated sub array', subscriptions)
+      }), [subscriptions]
 
       const getDefaultSubData = (step: number): SubscriptionForm => {
         if (step === 1) {
             return {
                 userId: "",
-                communication: "bots",
+                type: "bots",
                 levels: "",
                 lang: "",
                 technology: "",
@@ -58,7 +58,7 @@ const App:React.FC = () => {
         } else if (step === 2) {
             return {
                 userId: "",
-                communication: "email",
+                type: "email",
                 levels: "",
                 lang: "",
                 technology: "",
@@ -72,7 +72,7 @@ const App:React.FC = () => {
         } else if (step === 3) {
             return {
                 userId: "",
-                communication: "iframe",
+                type: "iframe",
                 levels: "",
                 lang: "",
                 technology: "",
@@ -86,21 +86,7 @@ const App:React.FC = () => {
         } else if (step === 4) {
             return {
                 userId: "",
-                communication: "tv",
-                levels: "",
-                lang: "",
-                technology: "",
-                frecuency: undefined,
-                channel: undefined,
-                domains: undefined,
-                color: undefined,
-                tipography: undefined,
-                apikey: "",
-            } as SubscriptionForm;
-        } else if (step === 5) {
-            return {
-                userId: "",
-                communication: "pepe",
+                type: "tv",
                 levels: "",
                 lang: "",
                 technology: "",
@@ -116,7 +102,7 @@ const App:React.FC = () => {
           
             return {
                 userId: "",
-                communication: "caremonda",
+                type: "caremonda",
                 levels: "",
                 lang: "",
                 technology: "",
@@ -133,13 +119,12 @@ const App:React.FC = () => {
       const [subData, SetSubData] = useState<SubscriptionForm>(getDefaultSubData(step));
 
       const addSubscription = (newSub:SubscriptionForm) => {
-        const exists = subArray.some(sub => sub.communication === newSub.communication)
+        const exists = subscriptions.some(sub => sub.type === newSub.type)
 
         if(!exists){
-          setSubArray(prevSubArray => {
+          setSubscriptionsArray(prevSubArray => {
             const updatedArray = [...prevSubArray, newSub]
             return updatedArray
-           
           })
           setErrorMessage(null)
 
@@ -152,7 +137,7 @@ const App:React.FC = () => {
 
       const validateArray = () => {
         
-        if(subArray.length === 0){
+        if(subscriptions.length === 0){
           setErrorMessage('You must register almost one subscription in one channel')
           return false; 
         } 
@@ -174,10 +159,12 @@ const App:React.FC = () => {
 
       const submitForm = async () => {
 
-        const data = {...FormData, ...subArray}
+        const data = {...FormData, subscriptions}
+
+        console.log(data)
 
         try {
-            const response = await axios.post('http://localhost:3000/register/form/data', data);
+            const response = await axios.post('http://localhost:3000/v1/api/users/create', data);
             console.log(response)
             setResponseMessage('Form submitted successfully!');
             console.log(response.data);
@@ -185,17 +172,25 @@ const App:React.FC = () => {
             setResponseMessage('Error submitting the form');
             console.error(error);
         }
-    };
+     };
+
+     const openPop = () => {
+
+     }
+
+     const closePop = () => {
+      
+     }
 
     
       return (
         <div>
           {step === 0 && <UserFormStep FormData={FormData} subData={subData} setSubData={SetSubData} SetFormData={SetFormData} nextStep={nextStep} /> }
-          {step === 1 && <FormBot subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subArray={subArray}/>}
-          {step === 2 && <FormEmail subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subArray={subArray}/>}
-          {step === 3 && <FormIframe subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subArray={subArray}/>}
-          {step === 4 && <Formtv subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subArray={subArray}/>}
-          {step === 5 && <SubFormStep subData={subData} setSubData={SetSubData} nextStep={submitForm} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subArray={subArray}/>}
+          {step === 1 && <FormBot subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions}/>}
+          {step === 2 && <FormEmail subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions}/>}
+          {step === 3 && <FormIframe subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions}/>}
+          {step === 4 && <Formtv subData={subData} setSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions}/>}
+          {step === 5 && <SubFormStep subData={subData} setSubData={SetSubData} nextStep={submitForm} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions}/>}
           
           {errorMessage && <span className="error-message">{errorMessage}</span>}
         </div>

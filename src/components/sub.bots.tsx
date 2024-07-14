@@ -1,11 +1,14 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {  SubFormProperties, SubscriptionForm } from "../common/subscription.field";
-
+import {  SubFormProperties, SubscriptionForm } from "../common/subscription.field"
+import { popup } from "../common/popup";
+import PopupStep
+ from "./popup";
 const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, setSubData, subData, addSubscription}) => {
 
     const {formState: {errors}, register, setValue, handleSubmit} = useForm<SubscriptionForm>();
-    
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
     useEffect(() => {
         (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
             setValue(key, subData[key])
@@ -17,38 +20,46 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
         setSubData({...subData, ...data})
     }
 
+    const openPop = () => {
+        setIsPopupOpen(true)
+    }
+
+    const closePop = () => {
+        setIsPopupOpen(false)
+    }
+
     return (
 
-        <div className="subContainer"> 
+        <div className="subContainer bots"> 
         <h1>Bots Subscription</h1>
         <form method="POST" onSubmit={handleSubmit(onSubmit)}>
 
-                <label htmlFor="">Communication</label>
-                <input type="text" id="communication" readOnly className='user'
-                {...register("communication", {
-                    required: "communication is required",
-                })} />
-                {errors.communication && typeof errors.communication.message === 'string' && <span>{errors.communication.message}</span>}
+                <label htmlFor="">type</label>
+                <input type="text" id="type" readOnly className='user'
+                    {...register("type", {
+                        required: "type is required",
+                    })} />
+                {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
     
-                <label htmlFor="">Senority</label>
+                <label htmlFor="">levels: </label>
                 <select id="seniority" {...register("levels", {
                     required: "The seniority is required"
                     })}>
-                    <option value="junior">Junior Developer</option>
-                    <option value="mid_level">MID Level</option>
-                    <option value="senior">Senior Developer</option>
+                    <option value="junior">Junior level</option>
+                    <option value="mid">MID Level</option>
+                    <option value="senior">Senior level</option>
                 </select>
                 {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
     
                 <label htmlFor="">Programming Language</label>
-                <select id="devLanguage" {...register("technology", {
+                <select id="technology" {...register("technology", {
                     required: "The programming language is required"
                  })}>
                     <option value="nodejs"> Node JS </option>
                     <option value="javascript"> Javascript </option>
                     <option value="typescript">Typescript</option>
                     <option value="java">Java</option>
-                    <option value="C-Sharp">C-Sharp</option>
+                    <option value="c-sharp">C-Sharp</option>
                 </select>
                 {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
     
@@ -58,7 +69,6 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
                 })}>
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
                 </select>
                 {errors.frecuency && typeof errors.frecuency.message === 'string' && <span>{errors.frecuency.message}</span>}
     
@@ -89,14 +99,36 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
                     required: "The channel ID is required",
                 })} />
                 {errors.channelId && typeof errors.channelId.message === 'string' && <span>{errors.channelId.message}</span>}
-
                 <div className="buttons">
                     <button type="button" onClick={prevStep}>Volver</button>
                     <button type="button" onClick={nextStep}>Omitir</button>
                     <button type="submit">Añadir subscripción</button>
                 </div>
-            
+
+                <button className="show" onClick={openPop}>Watch tutorial How get my channel ID</button>
         </form>
+
+        <PopupStep openPop={isPopupOpen} closePop={closePop}>
+            <div className="info">
+            <div className="telegram container">
+                <h1>Get your channel ID in Telegram</h1>
+                <div className="images">
+                <img src="telegram-step1.png" alt="Telegram Step 1" />
+                <img src="telegram-step2.png" alt="Telegram Step 2" />
+                <img src="telegram-step3.png" alt="Telegram Step 3" />
+                </div>
+            </div>
+            <div className="discord container">
+                <h1>Get your channel ID in Discord</h1>
+                <div className="images">
+                <img src="discord-step1.png" alt="Discord Step 1" />
+                <img src="discord-step2.png" alt="Discord Step 2" />
+                <img src="discord-step3.png" alt="Discord Step 3" />
+                </div>
+            </div>
+            </div>
+      </PopupStep>
+
         </div>
     );
 }
