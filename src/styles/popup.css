@@ -1,0 +1,35 @@
+.parent_pop {
+    position: fixed;
+    border-radius: 20px;
+    top: 1;
+    left: 1;
+    width: 50%;
+    height: 50%;
+    background: #28992e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+.general {
+
+    width: 100px;
+    height: 100px;
+    background-color: #28992e;
+}
+

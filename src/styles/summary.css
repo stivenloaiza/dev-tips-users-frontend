@@ -1,0 +1,72 @@
+/* Summary subscription styles  */
+
+
+html, body {
+    font-family: 'Ubuntu', sans-serif;
+    height: 100%;
+    width: 100%;
+    background-color: #003664;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0 0 0;
+  }
+  
+  #root > div {
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+  }
+
+
+  .summary {
+    background-color: #021b31;
+    border-radius: 20px;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 100%;
+  }
+
+  .summary h2 {
+    color: white;
+    margin: 0px 0px 50px 0px;
+  }
+
+  .summary .container-summaries {
+    color: white;
+    background-color: #28992e;
+    padding: 20px 40px;
+    border-radius: 20px;
+  }
+
+  .summary button {
+    width: 90%;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background-color: #28992e;
+    color: white;
+    font-weight: 1000;
+    border: none;
+    margin: 60px 0;
+    font-family: 'Ubuntu', sans-serif;
+  }
+
+  .summary button:hover {
+    cursor: pointer;
+  }
