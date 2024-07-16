@@ -33,14 +33,14 @@ const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep,
                   {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
           
                   <label htmlFor=""> Level: </label>
-                  <select id="" {...register("levels", {
+                  <select id="" {...register("level", {
                       required: "The seniority is required"
                       })}>
                       <option value="junior">Junior level</option>
                       <option value="mid">MID Level</option>
                       <option value="senior">Senior level</option>
                   </select>
-                  {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
+                  {errors.level && typeof errors.level.message === 'string' && <span>{errors.level?.message}</span>}
           
                   <label htmlFor=""> Technology: </label>
                   <select id="technology" {...register("technology", {
@@ -67,10 +67,10 @@ const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep,
                   {errors.color && typeof errors.color.message === 'string' && <span>{errors.color.message}</span>}
       
                   <label htmlFor=""> Tipography: </label>
-                  <input type="text" {...register("tipography", {
+                  <input type="text" {...register("typography", {
                     required: "Please select a tipography"
                   })}/>
-                  {errors.tipography && typeof errors.tipography.message === 'string' && <span>{errors.tipography.message}</span>}
+                  {errors.typography && typeof errors.typography.message === 'string' && <span>{errors.typography.message}</span>}
                   
 
                   <label htmlFor=""> Language: </label>
@@ -81,8 +81,7 @@ const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep,
                       <option value="english"> English </option>
                   </select>
                   {errors.lang && typeof errors.lang.message === 'string' && <span>{errors.lang.message}</span>}
-
-
+                  
               <div className="buttons">
                   <button type="button" onClick={prevStep}>Volver</button>
                   <button type="button" onClick={nextStep}>Siguiente</button>

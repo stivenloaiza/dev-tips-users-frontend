@@ -1,15 +1,16 @@
 export interface SubscriptionForm {
     userId: string;
     type: string;
-    levels: string;
+    level: string;
     lang: string;
     technology: string;
-    frecuency?: string;
+    frequency?: string;
     channel?: string;
     channelId?:string; 
     domains?: string;
     color?: string;
-    tipography?: string;
+    iframeCode?: string; 
+    typography?: string;
     apikey: any;
 }
 

@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 import './styles/App.css'
 import SubFormStep from './components/subscription';
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/ReactToastify.css'
 
 
 const App:React.FC = () => {
@@ -29,7 +31,7 @@ const App:React.FC = () => {
 
       const [subscriptions, setSubscriptionsArray] = useState<Array<SubscriptionForm>>([])
       const [errorMessage, setErrorMessage] = useState<string | null>(null)
-      const [responseMessage, setResponseMessage] = useState('')
+      const [isLoading, setIsLoading] = useState(false)
 
       useEffect(() => {
         SetSubData(getDefaultSubData(step));
@@ -159,28 +161,51 @@ const App:React.FC = () => {
 
       const submitForm = async () => {
 
+        setIsLoading(true)
+
         const data = {...FormData, subscriptions}
 
         console.log(data)
 
         try {
             const response = await axios.post('http://localhost:3000/v1/api/users/create', data);
-            console.log(response)
-            setResponseMessage('Form submitted successfully!');
-            console.log(response.data);
+
+            if(response){
+
+              if(response.data.iframe){
+
+                toast.success(
+                  <div className='iframe_alert alert'>
+                    <h3>Registration Sucessfull!!!!</h3>
+                    <div>
+                      <p>Your iframe code is: </p>
+                      <code>
+                        `${response.data.iframe}`
+                      </code>
+                    </div>
+                  </div>
+                )
+
+              } else {
+
+                toast.success(
+                  <div className='alert'>
+                    <h3>Registration Sucessfull!!!!!</h3>
+                    <p>Welcome to this community</p>
+                  </div>
+                )
+
+              }  
+            }
+
+
         } catch (error) {
-            setResponseMessage('Error submitting the form');
-            console.error(error);
+            toast.error("Error Submiting the form")
+            console.error(error)
+        } finally {
+          setIsLoading(false)
         }
      };
-
-     const openPop = () => {
-
-     }
-
-     const closePop = () => {
-      
-     }
 
     
       return (
@@ -193,6 +218,7 @@ const App:React.FC = () => {
           {step === 5 && <SubFormStep subData={subData} setSubData={SetSubData} nextStep={submitForm} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions}/>}
           
           {errorMessage && <span className="error-message">{errorMessage}</span>}
+          <ToastContainer/>
         </div>
       )
       

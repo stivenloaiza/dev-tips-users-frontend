@@ -8,7 +8,7 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, set
     const { register, setValue, formState: {errors}, handleSubmit} = useForm({
         defaultValues: {
          ...subData,
-         communication: "tv"
+         type: "tv"
         }
       });
 
@@ -36,14 +36,14 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, set
                     {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
             
                     <label htmlFor="">Level: </label>
-                    <select id="levels" {...register("levels", {
+                    <select id="levels" {...register("level", {
                         required: "The seniority is required"
                         })}>
                         <option value="junior">Junior level</option>
                         <option value="mid">MID Level</option>
                         <option value="senior">Senior level</option>
                     </select>
-                    {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
+                    {errors.level && typeof errors.level.message === 'string' && <span>{errors.level?.message}</span>}
                     
 
                     <label htmlFor="">Language: </label>

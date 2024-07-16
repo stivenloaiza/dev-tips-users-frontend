@@ -10,7 +10,7 @@ const FormEmail:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, 
     const { register, setValue , formState:{errors}, handleSubmit} = useForm({
       defaultValues: {
         ...subData,
-        communication: "email"
+        type: "email"
       }
     });
 
@@ -40,14 +40,14 @@ const FormEmail:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, 
       
       
               <label htmlFor="">Level: </label>
-              <select id="" {...register("levels", {
+              <select id="" {...register("level", {
                     required: "The seniority is required"
                   })}>
                   <option value="junior">Junior level</option>
                   <option value="mid">MID Level</option>
                   <option value="senior">Senior level</option>
               </select>
-              {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
+              {errors.level && typeof errors.level.message === 'string' && <span>{errors.level?.message}</span>}
       
               <label htmlFor="">Technology: </label>
               <select id="technology" {...register("technology", {
@@ -62,13 +62,13 @@ const FormEmail:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, 
               {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
       
                   <label htmlFor="">Frecuency: </label>
-                  <select id="" {...register("frecuency", {
+                  <select id="frequency" {...register("frequency", {
                     required: "Please select the frecuency configuration"
                   })}>
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
                   </select>
-                  {errors.frecuency && typeof errors.frecuency.message === 'string' && <span>{errors.frecuency.message}</span>}
+                  {errors.frequency && typeof errors.frequency.message === 'string' && <span>{errors.frequency.message}</span>}
                   
 
                   <label htmlFor="">Language: </label>
