@@ -7,17 +7,17 @@ interface subformStep extends SubFormProperties<SubscriptionForm> {
   subscriptions: Array<SubscriptionForm>
 }
 
-const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubData, nextStep, prevStep, subscriptions}) => {
+const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({SubData, SetSubData, nextStep, prevStep, subscriptions}) => {
 
     const { handleSubmit, setValue} = useForm()
 
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-      (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-        setValue(key, subData[key])
+      (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+        setValue(key, SubData[key])
       })
-    }, [subData, setSubData])
+    }, [SubData, SetSubData])
 
     return (
         <form method="POST" className="summary" onSubmit={handleSubmit(nextStep)} >
@@ -29,7 +29,7 @@ const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubDa
             {
               subscriptions.map((subscription, index) => (
                 <div className="container">
-                  <p>Subscription {index + 1}</p>
+                  <p className="subTitle">Subscription {index + 1}</p>
                     <div className="containSummary" key={index}>
                       {Object.keys(subscription).map((key: string) => (
                         <div>
@@ -41,9 +41,7 @@ const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubDa
               ))
             }
           </div> 
-
           }
-          
             <button type="submit">Finalizar Registro</button>
         </form>
     )

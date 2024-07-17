@@ -2,24 +2,26 @@ import { FC, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { SubscriptionForm, SubFormProperties} from "../common/subscription.field"
 
-const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, setSubData, subData, addSubscription}) => {
+const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, SetSubData, SubData, addSubscription, removeUndefinedFields}) => {
     const { register, setValue, formState: {errors}, handleSubmit} = useForm({
       defaultValues: {
-        ...subData,
-        communication: "iframes", 
+        ...SubData,
+        type: "iframe", 
       }
     });
 
       const onSubmit = (data: SubscriptionForm) => {
-        addSubscription({...subData, ...data})
-        setSubData({...subData, ...data})
+        const correctData = removeUndefinedFields(data)
+        addSubscription({...correctData})
+        SetSubData({...SubData, ...correctData}) 
+        
       }
 
       useEffect(() => {
-        (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-          setValue(key, subData[key])
+        (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+          setValue(key, SubData[key])
         })
-      }, [subData, setSubData])
+      }, [SubData, setValue])
   
     return (
         <div className="subContainer">

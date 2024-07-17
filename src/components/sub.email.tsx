@@ -5,26 +5,27 @@ import {  SubscriptionForm, SubFormProperties} from "../common/subscription.fiel
 
 
 
-const FormEmail:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, setSubData, subData, addSubscription}) => {
+const FormEmail:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, SetSubData, SubData, addSubscription, removeUndefinedFields}) => {
 
     const { register, setValue , formState:{errors}, handleSubmit} = useForm({
       defaultValues: {
-        ...subData,
+        ...SubData,
         type: "email"
       }
     });
 
     const onSubmit = (data: SubscriptionForm) => {
-      addSubscription({...subData, ...data})
-      setSubData({...subData, ...data})
+        const correctData = removeUndefinedFields(data)
+        addSubscription({...correctData})
+        SetSubData({...SubData, ...correctData}) 
     }
 
     
     useEffect(() => {
-      (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-        setValue(key, subData[key])
+      (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+        setValue(key, SubData[key])
       })
-    }, [subData, setSubData])
+    }, [SubData, setValue])
 
 
     return (

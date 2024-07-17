@@ -14,26 +14,11 @@ export interface SubscriptionForm {
     apikey: any;
 }
 
-// export interface EmailSubscriptionForm extends SubscriptionForm {
-//     communication: "email";
-// }
-
-// export interface BotSubscriptionForm extends SubscriptionForm {
-//     communication: "bots";
-// }
-
-// export interface IframeSubscriptionForm extends SubscriptionForm {
-//     communication: "iframe";
-// }
-
-// export interface TvSubscriptionForm extends SubscriptionForm {
-//     communication: "tv";
-// }
-
 export interface SubFormProperties<T extends SubscriptionForm> {
-    subData: T;
-    setSubData: React.Dispatch<React.SetStateAction<T>>;
+    SubData: T;
+    SetSubData: React.Dispatch<React.SetStateAction<T>>;
     addSubscription: (newSub: T) => void;
+    removeUndefinedFields: (data:any) => any;
     validateArray: () => boolean;
     nextStep: () => void;
     prevStep?: () => void;

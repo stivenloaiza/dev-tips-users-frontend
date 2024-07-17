@@ -1,23 +1,28 @@
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {  SubFormProperties, SubscriptionForm } from "../common/subscription.field"
-import { popup } from "../common/popup";
-import PopupStep
- from "./popup";
-const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, setSubData, subData, addSubscription}) => {
+import PopupStep from "./popup";
+const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, SetSubData, SubData, addSubscription, removeUndefinedFields}) => {
 
-    const {formState: {errors}, register, setValue, handleSubmit} = useForm<SubscriptionForm>();
+    const {formState: {errors}, register, setValue, handleSubmit} = useForm<SubscriptionForm>({
+        defaultValues: {
+         ...SubData,
+         type: "bot"
+        }
+      });
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
-        (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-            setValue(key, subData[key])
+        (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+            console.log(SubData)
+            setValue(key, SubData[key])
         })
-    }, [subData, setSubData])
+    }, [SubData, setValue])
 
     const onSubmit = (data:SubscriptionForm) => {
-        addSubscription({...data})
-        setSubData({...subData, ...data})
+        const correctData = removeUndefinedFields(data)
+        addSubscription({...correctData})
+        SetSubData({...SubData, ...correctData}) 
     }
 
     const openPop = () => {
@@ -35,14 +40,13 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
         <form method="POST" onSubmit={handleSubmit(onSubmit)}>
 
                 <label htmlFor="">type</label>
-                <input type="text" id="type" readOnly className='user'
-                    {...register("type", {
+                <input type="text" id="type" readOnly className='user'{...register("type", {
                         required: "type is required",
                     })} />
                 {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
     
                 <label htmlFor="">levels: </label>
-                <select id="levels" {...register("level", {
+                <select id="level" {...register("level", {
                     required: "The seniority is required"
                     })}>
                     <option value="junior">Junior level</option>
@@ -77,8 +81,8 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
                 <select id="channel" {...register("channel", {
                     required: "Please select the channel"
                 })}>
-                    <option value="telegram">Telegram</option>
-                    <option value="discord">Discord</option>
+                    <option value="Telegram">Telegram</option>
+                    <option value="Discord">Discord</option>
                 </select>
                 {errors.channel && typeof errors.channel.message === 'string' && <span>{errors.channel.message}</span>}
                   
@@ -94,14 +98,14 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
                 {errors.lang && typeof errors.lang.message === 'string' && <span>{errors.lang.message}</span>}
 
                 <label htmlFor="">Your channel ID: </label>
-                <input type="text" id="channelId" readOnly className='sub'
+                <input type="text" id="channelId" className='sub'
                 {...register("channelId", {
                     required: "The channel ID is required",
                 })} />
                 {errors.channelId && typeof errors.channelId.message === 'string' && <span>{errors.channelId.message}</span>}
                 <div className="buttons">
                     <button type="button" onClick={prevStep}>Volver</button>
-                    <button type="button" onClick={nextStep}>Omitir</button>
+                    <button type="button" onClick={nextStep}>Siguiente</button>
                     <button type="submit">Añadir subscripción</button>
                 </div>
 
