@@ -67,8 +67,11 @@ html, body {
   margin: 40px 0px;
   width: 100%;
   font-weight: 1000;
+  padding: 10px 40px;
+  border-radius: 10px;
   background-color: #28992e;
   color: white;
+  border: none;
 }
 
 .container_parent h1 {
@@ -118,6 +121,12 @@ html, body {
   background-color: #021b31;
 }
 
+span {
+  color: tomato;
+  font-size: 10px;
+  font-weight: 700;
+}
+
 .subContainer h1 {
   color: white;
 }
@@ -150,6 +159,25 @@ html, body {
   color: white;
   font-weight: 1000;
   border: none;
+}
+
+.subContainer .show {
+  background-color: transparent;
+  text-decoration: underline;
+  color: #28992e;
+  margin: 0px 0px 100px 0px;
+}
+
+.bots {
+  position: absolute;
+}
+
+.subContainer .show:hover {
+  cursor: pointer;
+}
+
+.alert {
+  
 }
 
 

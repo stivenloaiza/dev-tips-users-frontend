@@ -24,7 +24,7 @@ const {register, watch, handleSubmit, formState:{errors}, setValue} = useForm()
     <div className='container_parent' >
     <h1>Register</h1>
     <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="">Name and Last Name: </label>
+        <label htmlFor="">Username:</label>
           <input type="text" id="name" className='user' 
           {...register("name", {
             required: "Name is required",
@@ -57,10 +57,9 @@ const {register, watch, handleSubmit, formState:{errors}, setValue} = useForm()
               message: "Please valid your cellphone"
             },
             maxLength: {
-              value: 10,
+              value: 11,
               message: "The maximun of the digits in your cellphone is 11, please confirm the cellphone" 
-            }
-
+            },
           })}/>
           {errors.phone && typeof errors.phone.message === 'string' && <span>{errors.phone.message}</span>}
 
@@ -69,16 +68,16 @@ const {register, watch, handleSubmit, formState:{errors}, setValue} = useForm()
             required: "role is required"
           })}>
           {errors.role && typeof errors.role.message === 'string' && <span>{errors.role.message}</span>}
-            <option value="business">Business</option>
+            <option value="company">Business</option>
             <option value="person">Person</option>
           </select>
 
         {   
-        watch("role") === "business" && (
+        watch("role") === "company" && (
 
               <>
               <label htmlFor=""> Manager Name: </label>
-              <input type="text" id="manager_name" {...register("manager_name", {
+              <input type="text" id="managerName" {...register("managerName", {
               required: "The manager name is required",
               minLength: {
                 value: 2,
@@ -89,14 +88,24 @@ const {register, watch, handleSubmit, formState:{errors}, setValue} = useForm()
                 message: "The maximun of characters are 50"
               },  
               })}/>
+              {errors.managerName && typeof errors.managerName.message === "string" && <span>{errors.managerName.message}</span>}
 
               <label htmlFor="">Manager Email: </label>
-              <input type="text" id="manager_email"/>
+              <input type="text" id="managerEmail" {...register("managerEmail", {
+                required: "The manager email is required",
+                pattern: {
+                  value:  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: "Enter a valid email address"
+                }
+              })}/>
+              {errors.managerEmail && typeof errors.managerEmail.message === "string" && <span>{errors.managerEmail.message}</span>}
 
-              <label htmlFor=""> Contact Number: </label>
-              <input type="text" id="contact_number"/>
-              </>
-              
+              <label htmlFor=""> Manager Phone: </label>
+              <input type="text" id="managerPhone" {...register("managerPhone", {
+                  required: "The manager phone is required"
+                })}/>
+              {errors.managerPhone && errors.managerPhone.message === "string" && <span>{errors.managerPhone.message}</span>}
+            </>
         ) 
         }
 

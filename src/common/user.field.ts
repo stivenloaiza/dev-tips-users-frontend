@@ -5,16 +5,16 @@ export interface UserForm {
         email: string,
         phone: string,
         role: string,
-        manager_name?: string,
-        manager_email?: string,
-        contact_number?: string,
+        managerName?: string,
+        managerEmail?: string,
+        managerPhone?: string,
 }
 
 export interface UserFormProperties {
     FormData: UserForm;
     SetFormData:React.Dispatch<React.SetStateAction<UserForm>>;
-    subData: SubscriptionForm;
-    setSubData: React.Dispatch<React.SetStateAction<SubscriptionForm>>;
+    SubData: SubscriptionForm;
+    SetSubData: React.Dispatch<React.SetStateAction<SubscriptionForm>>;
     nextStep:() => any; 
     prevStep?:() => any;
 }
