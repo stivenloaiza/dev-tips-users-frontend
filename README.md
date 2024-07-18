@@ -1,30 +1,62 @@
-# React + TypeScript + Vite
+#User and Subscription Register Form
+#Description
+In this project, we have developed a form that allows users to create their subscriptions. A user can register up to four subscriptions with one account, one for each type (email, bot, iframe, tv), and all this data is sent to the backend.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This form enables us to maintain a relationship with the user, providing access to a frontend flow for submitting their data.
 
-Currently, two official plugins are available:
+Author: Thomas Restrepo
+License: MIT
+Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Prerequisites
+React JS
+Vite
+#Steps to Install 
 
-## Expanding the ESLint configuration
+*Clone the repository:*
+git clone https://github.com/stivenloaiza/dev-tips-users-frontend.git
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+*Navigate to the project directory:*
+cd register-form 
 
-- Configure the top-level `parserOptions` property like this:
+*Install dependencies:*
+npm install
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+*Run the project:*
+npm run dev
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+The project runs on port 5173.
+Usage
+During the registration process, the user fills in their data and proceeds to the next step. For subscriptions, the user needs to press the "Add Subscription" button and then the "Next Step" button.
+
+Example Usage
+# Navigate to the local server running on port 5173
+http://localhost:5173
+Contributing
+To contribute to the project, please follow these steps:
+
+*Create a new branch for each task you want to add to the code:*
+git checkout -b feature/your-feature-name
+
+*Make your changes and commit them:*
+git commit -m 'Add some feature'
+
+*Push to the branch:*
+git push origin feature/your-feature-name
+
+
+Open a pull request to the main branch.
+
+#Common Issues
+- If you encounter issues with the process, the most common problem is that the backend endpoints do not correctly align with the frontend endpoints. Please ensure they are synchronized correctly and use the same in both places.
+
+- In case of entering incorrect data, the user will receive a message with the issues found.
+
+#Technologies Used
+React JS
+Vite
+React Hook Form (library for handling forms)
+Toastify (library for alerts)
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
