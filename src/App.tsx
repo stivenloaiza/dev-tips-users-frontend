@@ -8,7 +8,7 @@ import UserFormStep from './components/useForm';
 import { useEffect, useState } from 'react'
 import './styles/App.css'
 import SubFormStep from './components/subscription';
-import axios from 'axios'
+import axios, { HttpStatusCode } from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 
@@ -178,47 +178,55 @@ const App:React.FC = () => {
 
         const data = {...FormData, subscriptions}
 
-        // try {
+         try {
             const response = await axios.post('http://localhost:3000/v1/api/users/create', data);
-            console.log('RESPONSE: ', response)
-            return response
+            console.log('RESPONSE OME', response)
 
-              
+            // const iframeResponse = await axios.post('http://localhost:4000/v1/api/iframe/getIframe')
+            // console.log('IFRAME HERE BROTHER', iframeResponse)
 
-            //   if(response.data.iframe){
+            if(response){
+              toast.success(
+                     <div className='alert'>
+                       <h3>Registration Sucessfull!!!!!</h3>
+                       <p>Welcome to this community</p>
+                     </div>
+              )
+            }
+            // if(response.data.iframe){
 
-            //     const iframe = await axios.post('http://localhost:5003/v1/api/iframe/getIframe')
-            //     toast.success(
-            //       <div className='iframe_alert alert'>
-            //         <h3>Registration Sucessfull!!!!</h3>
-            //         <div>
-            //           <p>Your iframe code is: </p>
-            //           <code>
-            //             `${response.data.iframe}`
-            //           </code>
-            //         </div>
-            //       </div>
-            //     )
+              // try {
 
-            //   } else {
+                
+              //   // toast.success(
+              //   //   <div className='iframe_alert alert'>
+              //   //     <h3>Registration Sucessfull!!!!</h3>
+              //   //     <div>
+              //   //       <p>Your iframe code is: </p>
+              //   //       <code>
+              //   //         `${iframeResponse}`
+              //   //       </code>
+              //   //     </div>
+              //   //   </div>
+              //   // )
 
-            //     toast.success(
-            //       <div className='alert'>
-            //         <h3>Registration Sucessfull!!!!!</h3>
-            //         <p>Welcome to this community</p>
-            //       </div>
-            //     )
+              // } catch(error){
+              //   console.error(`ISSUE WITH IFRAME: ${error}`)
+              // }
+               
 
-            //   }  
-            // }
+              // } else {
 
+              //  
 
-        // } catch (error) {
-        //     toast.error("Error Submiting the form")
-        //     console.error(error)
-        // } finally {
-        //   setIsLoading(false)
-        // }
+              // }  
+            } catch (error) {
+            toast.error("Error Submiting the form")
+            console.error("ERROR", error)
+            throw new Error("THERE IS A ISSUE SAVING THE SUBSCRIPTION")
+        } finally {
+          setIsLoading(false)
+        }
      };
 
     
