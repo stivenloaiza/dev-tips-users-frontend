@@ -117,17 +117,13 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, S
             <div className="telegram container">
                 <h1>Get your channel ID in Telegram</h1>
                 <div className="images">
-                <img src="telegram-step1.png" alt="Telegram Step 1" />
-                <img src="telegram-step2.png" alt="Telegram Step 2" />
-                <img src="telegram-step3.png" alt="Telegram Step 3" />
+                    <link rel="stylesheet" href="" />
                 </div>
             </div>
             <div className="discord container">
                 <h1>Get your channel ID in Discord</h1>
                 <div className="images">
-                <img src="discord-step1.png" alt="Discord Step 1" />
-                <img src="discord-step2.png" alt="Discord Step 2" />
-                <img src="discord-step3.png" alt="Discord Step 3" />
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/h3xdFhg1ouk?si=kZLRO519JEKu4xBm" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
             </div>
             </div>

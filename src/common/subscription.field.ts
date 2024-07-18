@@ -9,7 +9,7 @@ export interface SubscriptionForm {
     channelId?:string; 
     domains?: string;
     color?: string;
-    iframeCode?: string; 
+    iframe?: string; 
     typography?: string;
     apikey: any;
 }
