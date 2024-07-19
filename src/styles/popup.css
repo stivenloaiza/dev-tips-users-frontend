@@ -1,10 +1,11 @@
 .parent_pop {
     position: fixed;
     border-radius: 20px;
-    top: 1;
+    padding: 10px 0;
+    top: 10rem;
     left: 1;
-    width: 50%;
-    height: 50%;
+    width: 80%;
+    height: auto;
     background: #28992e;
     display: flex;
     justify-content: center;

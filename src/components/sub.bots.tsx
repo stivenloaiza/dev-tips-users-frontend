@@ -1,23 +1,28 @@
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {  SubFormProperties, SubscriptionForm } from "../common/subscription.field"
-import { popup } from "../common/popup";
-import PopupStep
- from "./popup";
-const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, setSubData, subData, addSubscription}) => {
+import PopupStep from "./popup";
+const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, SetSubData, SubData, addSubscription, removeUndefinedFields}) => {
 
-    const {formState: {errors}, register, setValue, handleSubmit} = useForm<SubscriptionForm>();
+    const {formState: {errors}, register, setValue, handleSubmit} = useForm<SubscriptionForm>({
+        defaultValues: {
+         ...SubData,
+         type: "bot"
+        }
+      });
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
-        (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-            setValue(key, subData[key])
+        (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+            console.log(SubData)
+            setValue(key, SubData[key])
         })
-    }, [subData, setSubData])
+    }, [SubData, setValue])
 
     const onSubmit = (data:SubscriptionForm) => {
-        addSubscription({...data})
-        setSubData({...subData, ...data})
+        const correctData = removeUndefinedFields(data)
+        addSubscription({...correctData})
+        SetSubData({...SubData, ...correctData}) 
     }
 
     const openPop = () => {
@@ -35,21 +40,20 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
         <form method="POST" onSubmit={handleSubmit(onSubmit)}>
 
                 <label htmlFor="">type</label>
-                <input type="text" id="type" readOnly className='user'
-                    {...register("type", {
+                <input type="text" id="type" readOnly className='user'{...register("type", {
                         required: "type is required",
                     })} />
                 {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
     
                 <label htmlFor="">levels: </label>
-                <select id="seniority" {...register("levels", {
+                <select id="level" {...register("level", {
                     required: "The seniority is required"
                     })}>
                     <option value="junior">Junior level</option>
                     <option value="mid">MID Level</option>
                     <option value="senior">Senior level</option>
                 </select>
-                {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
+                {errors.level && typeof errors.level.message === 'string' && <span>{errors.level?.message}</span>}
     
                 <label htmlFor="">Programming Language</label>
                 <select id="technology" {...register("technology", {
@@ -64,21 +68,21 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
                 {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
     
                 <label htmlFor="">Frecuency</label>
-                <select id="frecuency" {...register("frecuency", {
+                <select id="frequency" {...register("frequency", {
                     required: "Please select the frecuency configuration"
                 })}>
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
                 </select>
-                {errors.frecuency && typeof errors.frecuency.message === 'string' && <span>{errors.frecuency.message}</span>}
+                {errors.frequency && typeof errors.frequency.message === 'string' && <span>{errors.frequency.message}</span>}
     
     
                 <label htmlFor="">Channel</label>
                 <select id="channel" {...register("channel", {
                     required: "Please select the channel"
                 })}>
-                    <option value="telegram">Telegram</option>
-                    <option value="discord">Discord</option>
+                    <option value="Telegram">Telegram</option>
+                    <option value="Discord">Discord</option>
                 </select>
                 {errors.channel && typeof errors.channel.message === 'string' && <span>{errors.channel.message}</span>}
                   
@@ -94,14 +98,14 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
                 {errors.lang && typeof errors.lang.message === 'string' && <span>{errors.lang.message}</span>}
 
                 <label htmlFor="">Your channel ID: </label>
-                <input type="text" id="channelId" readOnly className='sub'
+                <input type="text" id="channelId" className='sub'
                 {...register("channelId", {
                     required: "The channel ID is required",
                 })} />
                 {errors.channelId && typeof errors.channelId.message === 'string' && <span>{errors.channelId.message}</span>}
                 <div className="buttons">
                     <button type="button" onClick={prevStep}>Volver</button>
-                    <button type="button" onClick={nextStep}>Omitir</button>
+                    <button type="button" onClick={nextStep}>Siguiente</button>
                     <button type="submit">Añadir subscripción</button>
                 </div>
 
@@ -113,17 +117,13 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, s
             <div className="telegram container">
                 <h1>Get your channel ID in Telegram</h1>
                 <div className="images">
-                <img src="telegram-step1.png" alt="Telegram Step 1" />
-                <img src="telegram-step2.png" alt="Telegram Step 2" />
-                <img src="telegram-step3.png" alt="Telegram Step 3" />
+                    <link rel="stylesheet" href="" />
                 </div>
             </div>
             <div className="discord container">
                 <h1>Get your channel ID in Discord</h1>
                 <div className="images">
-                <img src="discord-step1.png" alt="Discord Step 1" />
-                <img src="discord-step2.png" alt="Discord Step 2" />
-                <img src="discord-step3.png" alt="Discord Step 3" />
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/h3xdFhg1ouk?si=kZLRO519JEKu4xBm" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
             </div>
             </div>

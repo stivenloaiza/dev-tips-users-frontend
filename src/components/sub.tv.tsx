@@ -3,26 +3,26 @@ import { SubFormProperties, SubscriptionForm } from "../common/subscription.fiel
 import { FC, useEffect } from "react"
 
 
-const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, setSubData, subData, addSubscription, validateArray}) => {
+const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, SetSubData, SubData, addSubscription, validateArray, removeUndefinedFields}) => {
 
     const { register, setValue, formState: {errors}, handleSubmit} = useForm({
         defaultValues: {
-         ...subData,
-         communication: "tv"
+         ...SubData,
+         type: "tv"
         }
       });
 
       const onSubmit = (data:SubscriptionForm) => { 
-
-        addSubscription({...FormData, ...data})
-        setSubData({...FormData, ...data})
+        const correctData = removeUndefinedFields(data)
+        addSubscription({...correctData})
+        SetSubData({...SubData, ...correctData}) 
       }
 
       useEffect(() => {
-        (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-          setValue(key, subData[key])
+        (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+          setValue(key, SubData[key])
         })
-      }, [subData, setSubData])
+      }, [SubData, setValue])
 
     return (
         <div className="subContainer">
@@ -30,20 +30,20 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, set
             <form method="POST" onSubmit={handleSubmit(onSubmit)}>
 
                     <label htmlFor="">Type: </label>
-                    <input type="text" id="type" readOnly className='user' defaultValue='tv' {...register("type", {
+                    <input type="text" id="type" readOnly className='user' {...register("type", {
                         required: "type is required",
                     })}/>
                     {errors.type && typeof errors.type.message === 'string' && <span>{errors.type.message}</span>}
             
                     <label htmlFor="">Level: </label>
-                    <select id="levels" {...register("levels", {
+                    <select id="levels" {...register("level", {
                         required: "The seniority is required"
                         })}>
                         <option value="junior">Junior level</option>
                         <option value="mid">MID Level</option>
                         <option value="senior">Senior level</option>
                     </select>
-                    {errors.levels && typeof errors.levels.message === 'string' && <span>{errors.levels?.message}</span>}
+                    {errors.level && typeof errors.level.message === 'string' && <span>{errors.level?.message}</span>}
                     
 
                     <label htmlFor="">Language: </label>

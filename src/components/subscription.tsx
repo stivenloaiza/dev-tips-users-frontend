@@ -7,46 +7,29 @@ interface subformStep extends SubFormProperties<SubscriptionForm> {
   subscriptions: Array<SubscriptionForm>
 }
 
-const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubData, nextStep, prevStep, subscriptions}) => {
+const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({SubData, SetSubData, nextStep, prevStep, subscriptions}) => {
 
-    const {register, handleSubmit, watch, formState:{errors}, setValue} = useForm()
-    const [apikey, setApikey] = useState<string>('')
+    const { handleSubmit, setValue} = useForm()
+
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-      (Object.keys(subData) as Array <keyof SubscriptionForm>).forEach(key => {
-        setValue(key, subData[key])
+      (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
+        setValue(key, SubData[key])
       })
-    }, [subData, setSubData])
-
-    //FUNCIÓN OBTENER EL APIKEY 
-    // const getApi = async() => {
-    //   try {
-    //     const response = await fetch('', {
-    //       method: "POST",
-    //       headers: { 
-    //         "Content-Type":"application/json"
-    //       },
-    //       body: JSON.stringify({})
-    //     })
-  
-    //     if(response.ok){
-    //       const result = await response.json()
-    //       setApikey(result.apikey)
-    //     }
-    //   } catch (error){
-    //     console.error(`There is a problem catching the API`)
-    //   }
-    // }
+    }, [SubData, SetSubData])
 
     return (
         <form method="POST" className="summary" onSubmit={handleSubmit(nextStep)} >
+
           <h2>RESUMEN DE SUBSCRIPCIONES</h2>
 
-          <div className="container-summaries">
+          {
+            isLoading ? <div>cargando....</div> : <div className="container-summaries">
             {
               subscriptions.map((subscription, index) => (
                 <div className="container">
-                  <p>Subscription {index + 1}</p>
+                  <p className="subTitle">Subscription {index + 1}</p>
                     <div className="containSummary" key={index}>
                       {Object.keys(subscription).map((key: string) => (
                         <div>
@@ -57,7 +40,8 @@ const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({subData, setSubDa
                 </div>
               ))
             }
-          </div>
+          </div> 
+          }
             <button type="submit">Finalizar Registro</button>
         </form>
     )
