@@ -8,9 +8,7 @@ export interface SubscriptionForm {
     channel?: string;
     channelId?:string; 
     domains?: string;
-    color?: string;
     iframe?: string; 
-    typography?: string;
     apikey: any;
 }
 

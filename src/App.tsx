@@ -8,10 +8,11 @@ import UserFormStep from './components/useForm';
 import { useEffect, useState } from 'react'
 import './styles/App.css'
 import SubFormStep from './components/subscription';
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 
+let isIframe: boolean;
 
 const App:React.FC = () => {
 
@@ -63,8 +64,6 @@ const App:React.FC = () => {
                 channelId: "",
                 frequency: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else if (step === 2) {
@@ -78,8 +77,6 @@ const App:React.FC = () => {
                 channel: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else if (step === 3) {
@@ -93,8 +90,6 @@ const App:React.FC = () => {
                 channel: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else if (step === 4) {
@@ -108,8 +103,6 @@ const App:React.FC = () => {
                 channel: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else {
@@ -125,8 +118,6 @@ const App:React.FC = () => {
                 channel: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             };
         }
@@ -175,51 +166,50 @@ const App:React.FC = () => {
       const submitForm = async () => {
 
         setIsLoading(true)
-
         const data = {...FormData, subscriptions}
+
+        for(let subscription of subscriptions){
+          if(subscription.type === 'iframe'){
+            isIframe = true; 
+          } else {
+            isIframe = false
+          }
+        }
 
          try {
             const response = await axios.post('http://localhost:3000/v1/api/users/create', data);
             console.log('RESPONSE OME', response)
 
-            // const iframeResponse = await axios.post('http://localhost:4000/v1/api/iframe/getIframe')
-            // console.log('IFRAME HERE BROTHER', iframeResponse)
-
-            if(response){
+            if(isIframe === false){
               toast.success(
                      <div className='alert'>
                        <h3>Registration Sucessfull!!!!!</h3>
                        <p>Welcome to this community</p>
                      </div>
               )
-            }
-            // if(response.data.iframe){
+            } else if(isIframe === true){
+                try {
 
-              // try {
+                  
 
-                
-              //   // toast.success(
-              //   //   <div className='iframe_alert alert'>
-              //   //     <h3>Registration Sucessfull!!!!</h3>
-              //   //     <div>
-              //   //       <p>Your iframe code is: </p>
-              //   //       <code>
-              //   //         `${iframeResponse}`
-              //   //       </code>
-              //   //     </div>
-              //   //   </div>
-              //   // )
-
-              // } catch(error){
-              //   console.error(`ISSUE WITH IFRAME: ${error}`)
-              // }
-               
-
-              // } else {
-
-              //  
-
-              // }  
+                  toast.success(
+                    <div className='iframe_alert alert'>
+                      <h3>Registration Sucessfull!!!!</h3>
+                      <div>
+                        <p>Your iframe code is: </p>
+                        <code>
+                          `${iframeResponse.data}`
+                        </code>
+                      </div>
+                    </div>
+                  )
+  
+                } catch(error){
+                  console.error(`ISSUE WITH IFRAME: ${error}`)
+                }
+            
+              
+            } 
             } catch (error) {
             toast.error("Error Submiting the form")
             console.error("ERROR", error)

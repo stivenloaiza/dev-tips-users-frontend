@@ -60,7 +60,6 @@ const Formtv:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, Set
                     <select id="technology" {...register("technology", {
                         required: "The programming language is required"
                     })}>
-                        <option value="nodejs"> Node JS </option>
                         <option value="javascript"> Javascript </option>
                         <option value="typescript">Typescript</option>
                         <option value="java">Java</option>
