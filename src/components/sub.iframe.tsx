@@ -48,11 +48,11 @@ const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep,
                   <select id="technology" {...register("technology", {
                       required: "The programming language is required"
                   })}>
-                      <option value="nodejs"> Node JS </option>
-                      <option value="javascript"> Javascript </option>
-                      <option value="typescript">Typescript</option>
-                      <option value="java">Java</option>
-                      <option value="c-sharp">C-Sharp</option>
+                       <option value="Python"> Python</option>
+                    <option value="JavaScript"> Javascript </option>
+                    <option value="typescript">Typescript</option>
+                    <option value="java">Java</option>
+                    <option value="c#">C-Sharp</option>
                   </select>
                   {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
           
@@ -61,19 +61,6 @@ const FormIframe:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep,
                     required: "Please enter your domains"
                   })}/>
                   {errors.domains && typeof errors.domains.message === 'string' && <span>{errors.domains.message}</span>}
-      
-                  <label htmlFor=""> Color: </label>
-                  <input type="text" {...register("color", {
-                    required: "Please select the color for the styles"
-                  })}/>
-                  {errors.color && typeof errors.color.message === 'string' && <span>{errors.color.message}</span>}
-      
-                  <label htmlFor=""> Tipography: </label>
-                  <input type="text" {...register("typography", {
-                    required: "Please select a tipography"
-                  })}/>
-                  {errors.typography && typeof errors.typography.message === 'string' && <span>{errors.typography.message}</span>}
-                  
 
                   <label htmlFor=""> Language: </label>
                   <select id="language" {...register("lang", {

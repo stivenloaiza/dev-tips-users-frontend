@@ -12,7 +12,7 @@ import axios, { HttpStatusCode } from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 
-
+let isIframe:boolean = false; 
 const App:React.FC = () => {
 
       const [step, setStep] = useState<number>(0);
@@ -59,12 +59,10 @@ const App:React.FC = () => {
                 level: "",
                 lang: "",
                 technology: "",
-                channel: "",
+                channelType: "",
                 channelId: "",
                 frequency: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else if (step === 2) {
@@ -75,11 +73,9 @@ const App:React.FC = () => {
                 lang: "",
                 technology: "",
                 frequency: undefined,
-                channel: undefined,
+                channelType: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else if (step === 3) {
@@ -90,11 +86,9 @@ const App:React.FC = () => {
                 lang: "",
                 technology: "",
                 frequency: undefined,
-                channel: undefined,
+                channelType: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else if (step === 4) {
@@ -105,11 +99,9 @@ const App:React.FC = () => {
                 lang: "",
                 technology: "",
                 frequency: undefined,
-                channel: undefined,
+                channelType: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             } as SubscriptionForm;
         } else {
@@ -122,15 +114,13 @@ const App:React.FC = () => {
                 lang: "",
                 technology: "",
                 frequency: undefined,
-                channel: undefined,
+                channelType: undefined,
                 channelId: undefined,
                 domains: undefined,
-                color: undefined,
-                typography: undefined,
                 apikey: "",
             };
         }
-    };
+      };
 
       const [subData, SetSubData] = useState<SubscriptionForm>(getDefaultSubData(step));
 
@@ -174,78 +164,88 @@ const App:React.FC = () => {
 
       const submitForm = async () => {
 
-        setIsLoading(true)
+          setIsLoading(true)
+          console.log("FIRST", isIframe)
+          for(let subscription in subscriptions){
 
-        const data = {...FormData, subscriptions}
-
-         try {
-            const response = await axios.post('http://localhost:3000/v1/api/users/create', data);
-            console.log('RESPONSE OME', response)
-
-            // const iframeResponse = await axios.post('http://localhost:4000/v1/api/iframe/getIframe')
-            // console.log('IFRAME HERE BROTHER', iframeResponse)
-
-            if(response){
-              toast.success(
-                     <div className='alert'>
-                       <h3>Registration Sucessfull!!!!!</h3>
-                       <p>Welcome to this community</p>
-                     </div>
-              )
+            if(subscriptions[subscription].type === "iframe"){
+              isIframe = true
+              break; 
+            } else {
+              isIframe = false
             }
-            // if(response.data.iframe){
 
-              // try {
+          }
+          console.log("SECOND", isIframe)
+          const data = {...FormData, subscriptions}
 
-                
-              //   // toast.success(
-              //   //   <div className='iframe_alert alert'>
-              //   //     <h3>Registration Sucessfull!!!!</h3>
-              //   //     <div>
-              //   //       <p>Your iframe code is: </p>
-              //   //       <code>
-              //   //         `${iframeResponse}`
-              //   //       </code>
-              //   //     </div>
-              //   //   </div>
-              //   // )
+          const response = await axios.post('http://localhost:3000/v1/api/users/create', data);
+          console.log('RESPONSE OME', response)
 
-              // } catch(error){
-              //   console.error(`ISSUE WITH IFRAME: ${error}`)
-              // }
-               
+          try {
+            console.log("THIRD", isIframe)
+            if(isIframe === false){
 
-              // } else {
+              if(response){
+                toast.success(
+                      <div className='alert'>
+                        <h3>Registration Sucessfull!!!!!</h3>
+                        <p>Welcome to this community</p>
+                      </div>
+                )
+              }
 
-              //  
+            } else {
 
-              // }  
-            } catch (error) {
+                try {
+                  const iframeResponse = await axios.post('http://localhost:5173/iframe')
+                  console.log('IFRAME HERE BROTHER', iframeResponse)
+
+                  toast.success(
+                    <div className='iframe_alert alert'>
+                      <h3>Registration Sucessfull!!!!</h3>
+                      <div>
+                        <p>Your iframe code is: </p>
+                        <code>
+                          `${iframeResponse.data}`
+                        </code>
+                      </div>
+                    </div>
+                  )
+                } catch (error) {
+                  if (axios.isAxiosError(error)) {
+                    console.error(`Error Submitting the form: ${error.response?.status} - ${error.response?.statusText}`);
+                    toast.error(`Error Submitting the form: ${error.response?.status} - ${error.response?.statusText}`);
+                  } else {
+                    console.error('Unexpected error', error);
+                    toast.error('Unexpected error occurred');
+                  }
+            }
+          
+            } 
+          } catch(error){
             toast.error("Error Submiting the form")
             console.error("ERROR", error)
             throw new Error("THERE IS A ISSUE SAVING THE SUBSCRIPTION")
-        } finally {
-          setIsLoading(false)
-        }
-     };
+          } finally {
+            setIsLoading(false)
+          }
+      }
 
-    
-
-    
-      return (
-        <div>
-          {step === 0 && <UserFormStep FormData={FormData} SubData={subData} SetSubData={SetSubData} SetFormData={SetFormData} nextStep={nextStep} /> }
-          {step === 1 && <FormBot SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
-          {step === 2 && <FormEmail SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
-          {step === 3 && <FormIframe SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
-          {step === 4 && <Formtv SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
-          {step === 5 && <SubFormStep SubData={subData} SetSubData={SetSubData} nextStep={submitForm} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
-          
-          {errorMessage && <span className="error-message">{errorMessage}</span>}
-          <ToastContainer/>
-        </div>
-      )
+        return (
+          <div>
+            {step === 0 && <UserFormStep FormData={FormData} SubData={subData} SetSubData={SetSubData} SetFormData={SetFormData} nextStep={nextStep} /> }
+            {step === 1 && <FormBot SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
+            {step === 2 && <FormEmail SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
+            {step === 3 && <FormIframe SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
+            {step === 4 && <Formtv SubData={subData} SetSubData={SetSubData} nextStep={nextStep} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
+            {step === 5 && <SubFormStep SubData={subData} SetSubData={SetSubData} nextStep={submitForm} prevStep={prevStep} validateArray={validateArray} addSubscription={addSubscription} subscriptions={subscriptions} removeUndefinedFields={removeUndefinedFields}/>}
+            
+            {errorMessage && <span className="error-message">{errorMessage}</span>}
+            <ToastContainer/>
+          </div>
+        )
+      
       
 }
-
 export default App

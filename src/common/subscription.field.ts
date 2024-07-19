@@ -5,12 +5,10 @@ export interface SubscriptionForm {
     lang: string;
     technology: string;
     frequency?: string;
-    channel?: string;
+    channelType?: string;
     channelId?:string; 
     domains?: string;
-    color?: string;
     iframe?: string; 
-    typography?: string;
     apikey: any;
 }
 

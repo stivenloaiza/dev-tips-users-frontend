@@ -59,11 +59,11 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, S
                 <select id="technology" {...register("technology", {
                     required: "The programming language is required"
                  })}>
-                    <option value="nodejs"> Node JS </option>
-                    <option value="javascript"> Javascript </option>
+                    <option value="Python"> Python</option>
+                    <option value="JavaScript"> Javascript </option>
                     <option value="typescript">Typescript</option>
                     <option value="java">Java</option>
-                    <option value="c-sharp">C-Sharp</option>
+                    <option value="c#">C-Sharp</option>
                 </select>
                 {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
     
@@ -78,13 +78,13 @@ const FormBot: FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, S
     
     
                 <label htmlFor="">Channel</label>
-                <select id="channel" {...register("channel", {
+                <select id="channel" {...register("channelType", {
                     required: "Please select the channel"
                 })}>
                     <option value="Telegram">Telegram</option>
                     <option value="Discord">Discord</option>
                 </select>
-                {errors.channel && typeof errors.channel.message === 'string' && <span>{errors.channel.message}</span>}
+                {errors.channelType && typeof errors.channelType.message === 'string' && <span>{errors.channelType.message}</span>}
                   
             
                 

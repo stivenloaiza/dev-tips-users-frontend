@@ -54,11 +54,11 @@ const FormEmail:FC<SubFormProperties<SubscriptionForm>> = ({nextStep, prevStep, 
               <select id="technology" {...register("technology", {
                   required: "The programming language is required"
                 })}>
-                  <option value="nodejs"> Node JS </option>
-                  <option value="javascript"> Javascript </option>
-                  <option value="typescript">Typescript</option>
-                  <option value="java">Java</option>
-                  <option value="C-Sharp">C-Sharp</option>
+                   <option value="Python"> Python</option>
+                    <option value="JavaScript"> Javascript </option>
+                    <option value="typescript">Typescript</option>
+                    <option value="java">Java</option>
+                    <option value="c#">C-Sharp</option>
               </select>
               {errors.technology && typeof errors.technology.message === 'string' && <span>{errors.technology.message}</span>}
       
