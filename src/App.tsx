@@ -8,7 +8,7 @@ import UserFormStep from './components/useForm';
 import { useEffect, useState } from 'react'
 import './styles/App.css'
 import SubFormStep from './components/subscription';
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css'
 
@@ -31,7 +31,6 @@ const App:React.FC = () => {
 
       const [subscriptions, setSubscriptionsArray] = useState<Array<SubscriptionForm>>([])
       const [errorMessage, setErrorMessage] = useState<string | null>(null)
-      const [isLoading, setIsLoading] = useState(false)
 
 
       const removeUndefinedFields = (obj: any) => {
@@ -174,8 +173,6 @@ const App:React.FC = () => {
 
       const submitForm = async () => {
 
-        setIsLoading(true)
-
         const data = {...FormData, subscriptions}
 
          try {
@@ -225,7 +222,6 @@ const App:React.FC = () => {
             console.error("ERROR", error)
             throw new Error("THERE IS A ISSUE SAVING THE SUBSCRIPTION")
         } finally {
-          setIsLoading(false)
         }
      };
 

@@ -3,15 +3,11 @@ import { useForm } from "react-hook-form";
 import { FC, useEffect, useState } from "react";
 import '../styles/summary.css'
 
-interface subformStep extends SubFormProperties<SubscriptionForm> {
-  subscriptions: Array<SubscriptionForm>
-}
-
-const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({SubData, SetSubData, nextStep, prevStep, subscriptions}) => {
+const SubFormStep: FC<SubFormProperties<SubscriptionForm>> = ({SubData, SetSubData, nextStep, subscriptions}) => {
 
     const { handleSubmit, setValue} = useForm()
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading] = useState(false)
 
     useEffect(() => {
       (Object.keys(SubData) as Array <keyof SubscriptionForm>).forEach(key => {
